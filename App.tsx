@@ -1,43 +1,67 @@
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { TextInput, View, Text } from 'react-native';
+import { Button, StyleSheet, View, Text, TextInput } from 'react-native';
 import PagerView from 'react-native-pager-view';
 
-// const Tab = createMaterialBottomTabNavigator();
-
-const Tab = createMaterialTopTabNavigator();
-
-function Screen() {
-  const [msg, setMsg] = React.useState('');
-  const inputRef = React.useRef<TextInput>(null);
+export default function App() {
+  const pagerRef = React.useRef<PagerView>(null);
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home Screen</Text>
-      <TextInput
-        placeholder='text'
-        multiline
-        value={msg}
-        onChangeText={setMsg}
-        style={{borderWidth: 1, width: 100}}
-        ref={inputRef}
-        onFocus={()=>console.log("focus")}
-      />
+    <View style={{ flex: 1 }}>
+      <PagerView style={styles.viewPager} initialPage={0} ref={pagerRef}>
+        <View style={styles.page} key="0">
+          <Text>Page 0</Text>
+          <TextInput style={styles.textInput} placeholder="placeholder text" />
+          <Button
+            title="Forward - setPage(1)"
+            onPress={() => pagerRef.current?.setPage(1)}
+          />
+        </View>
+        <View style={styles.page} key="1">
+          <Text>Page 1</Text>
+          <TextInput style={styles.textInput} placeholder="placeholder text" />
+          <Button
+            title="Backward - setPage(0)"
+            onPress={() => pagerRef.current?.setPage(0)}
+          />
+                    <Button
+            title="Forward - setPage(2)"
+            onPress={() => pagerRef.current?.setPage(2)}
+          />
+        </View>
+        <View style={styles.page} key="2">
+          <Text>Page 2</Text>
+          <TextInput style={styles.textInput} placeholder="placeholder text" />
+          <Button
+            title="Backward - setPage(1)"
+            onPress={() => pagerRef.current?.setPage(1)}
+          />
+                    <Button
+            title="Forward - setPage(3)"
+            onPress={() => pagerRef.current?.setPage(3)}
+          />
+        </View>
+        <View style={styles.page} key="3">
+          <Text>Page 3</Text>
+          <TextInput style={styles.textInput} placeholder="placeholder text" />
+          <Button
+            title="Backward - setPage(2)"
+            onPress={() => pagerRef.current?.setPage(2)}
+          />
+        </View>
+      </PagerView>
     </View>
   );
 }
 
-export default function App() {
-  return (
-    <PagerView style={{flex: 1}} keyboardDismissMode="none">
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name='Screen1' component={Screen} />
-        <Tab.Screen name='Screen2' component={Screen} />
-        <Tab.Screen name='Screen3' component={Screen} />
-        <Tab.Screen name='Screen4' component={Screen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-    </PagerView>
-  );
-}
+const styles = StyleSheet.create({
+  viewPager: {
+    flex: 1,
+  },
+  page: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textInput: {
+    borderWidth: 1,
+    width: '50%',
+  },
+});
